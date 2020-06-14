@@ -33,10 +33,17 @@
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
-
+import axios from 'axios';
 export default {
   components: {
     AppLogo
+  },
+  asyncData() {
+    console.log("loading test");
+    axios.get('https://shop.sunofbeach.net/union/shop/discovery/categories').then(result=>{
+      console.log(result.data.data);
+    });
+
   }
 }
 </script>
