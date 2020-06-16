@@ -1,9 +1,15 @@
 import request from './http'
+
+export const baseUrl="https://shop.sunofbeach.net/union/shop/";
+
 export default {
   getCategories(){
-    return request.requestGet('https://shop.sunofbeach.net/union/shop/discovery/categories')
+    return request.requestGet(baseUrl+"discovery/categories")
   },
   getCategoriesContext(materialId,page){
-    return request.requestGet("https://shop.sunofbeach.net/union/shop/discovery/"+materialId+"/"+page)
+    return request.requestGet(baseUrl+"discovery/"+materialId+"/"+page)
+  },
+  getRecommendCategories(){
+    return request.requestGet(baseUrl+"recommend/categories")
   }
 }

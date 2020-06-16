@@ -1,87 +1,55 @@
 <template>
   <section class="container">
-    <div>
-      <app-logo/>
-      <h1 class="title">
-        我是标题
-      </h1>
-      <h2 class="subtitle">
-        我是描述
-      </h2>
-      <div>
-        <button>测试</button>
-        <el-button type="primary">主要按钮</el-button>
-        <el-button-group>
-          <el-button type="primary" icon="el-icon-edit"></el-button>
-          <el-button type="primary" icon="el-icon-share"></el-button>
-          <el-button type="primary" icon="el-icon-delete"></el-button>
-        </el-button-group>
-      </div>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
+    <div class="center-box">
+      <div class="recommend-category-box">
+        <ul class="clear-fix" >
+          <li :class="index !==0?'float-left':'float-left recommend-menu-active' " v-for="(item,index) in categories " :key="index">{{item.favorites_title}}</li>
+        </ul>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
 import api from '../utils/api';
 export default {
-  components: {
-    AppLogo
-  },
   asyncData() {
-    api.getCategories().then(result=>{
-      console.log(result.code);
-      console.log(result.message);
-      console.log(result.data);
+    return api.getRecommendCategories().then(result=>{
+      if(result.code === 10000){
+        return { categories: result.data};
+      }else{
+        //ToDo 处理异常
+      }
     });
-    api.getCategoriesContext(9660,1).then(result=>{
-      console.log(result.code);
-      console.log(result.message);
-      console.log(result.data);
-    });
-
   }
 }
 </script>
 
 <style>
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  .recommend-menu-active {
+    border-bottom:#c9302c 2px solid;
+    color:#c9302c !important;
+
+  }
+  .recommend-category-box li{
+    font-size: 16px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #8c8c8c;
+    cursor:pointer;
+  }
+
+.recommend-category-box{
+  height: 60px;
+  line-height: 58px;
+  margin-top: 30px;
+  background: #fff;
+  box-shadow: 0 5px 10px #d4d4d4;
+  margin-bottom: 30px;
 }
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.recommend-category-box ul{
+  list-style: none;
 }
 </style>
 

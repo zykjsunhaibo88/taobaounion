@@ -50,9 +50,9 @@
         <div class="size-info">
           <p>&COPY;家庭理财 Copyright  2014-2020
           <span>&nbsp;|&nbsp;</span>
-          <a href="http://www.beian.miit.gov.cn/" target="_blank" style="color:red">辽ICP备16013640号</a>
+          <a href="http://www.beian.miit.gov.cn/" target="_blank" style="color:white">辽ICP备16013640号</a>
           <span>&nbsp;|&nbsp;</span>
-          <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21010202000737" target="_blank" style="color:red">辽公网安备 21010202000737号</a>
+          <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21010202000737" target="_blank" style="color:white">辽公网安备 21010202000737号</a>
           </p>
         </div>
       </div>
@@ -77,6 +77,7 @@ html {
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 #header{
   box-shadow: 0 5px 10px #d4d4d4;
@@ -84,7 +85,7 @@ html {
   height: 70px;
 }
 #footer {
-  background-color: #333;
+  background-color: #c9302c;
 }
 .copyright{
   text-align: center;
