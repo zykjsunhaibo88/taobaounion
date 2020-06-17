@@ -11,5 +11,8 @@ export default {
   },
   getRecommendCategories(){
     return request.requestGet(baseUrl+"recommend/categories")
+  },
+  getRecommendContext(categoryId){
+    return request.requestGet(baseUrl+"recommend/"+categoryId)
   }
 }
