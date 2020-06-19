@@ -2,26 +2,29 @@
   <section class="container">
     <div class="center-box">
       <div class="recommend-category-box">
-        <ul class="clear-fix" >
-          <li :class="index !==0?'float-left':'float-left recommend-menu-active' " v-for="(item,index) in categories " :key="index">{{item.favorites_title}}</li>
+        <ul class="recommend-menu clear-fix" >
+          <li :class="index !==0?'float-left':'float-left recommend-menu-active' " v-for="(item,index) in categories "
+              :key="index"  @click="onCategoryClick(item)">{{item.favorites_title}}</li>
         </ul>
       </div>
       <div class="recommend-context-list-box">
         <div class="recommend-context-title">
-          <span>上/班/族/早/餐</span>
+          <span v-html="currentCategory"></span>
         </div>
         <div class="recommend-context-list clear-fix">
           <div class="recommend-context-item float-left" v-for="(item,index) in context.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item" :key="index">
             <div class="recommend-item-cover">
               <img :src="item.pict_url">
             </div>
-            <div class="recommend-item-tittle" v-text="item.title">
-
+            <div class="recommend-item-title">
+              <a  v-text="item.title" :href="item.coupon_click_url!==null?item.coupon_click_url:item.click_url" target="_blank">
+              </a>
             </div>
             <div class="recommend-item-info">
-                 <el-button type="danger">领券购买</el-button>
-                 <span>原价：{{item.zk_final_price}}</span>
+                 <a v-if="item.coupon_click_url!==null" class="buy-btn" :href="item.coupon_click_url" target="_blank">领券购买</a>
+                 <span class="recommend-original " v-text="item.coupon_click_url===null?'晚了，无优惠券':'原价'+item.zk_final_price"></span>
             </div>
+             <span class="recommend-coupon-info" v-if="item.coupon_info!==null" v-text="item.coupon_info"></span>
           </div>
         </div>
       </div>
@@ -32,20 +35,35 @@
 <script>
 import api from '../utils/api';
 export default {
+  methods: {
+    onCategoryClick(item){
+
+      this.currentCategory=(item.favorites_title.split('').join('<em>/</em>'));
+      //加载内容
+      this.loadContentByCategory(item.favorites_id);
+    },
+    loadContentByCategory(favoriteId){
+       api.getRecommendContextByProxy(favoriteId).then(result=>{
+         this.context=result.data;
+       })
+    }
+  },
   /*data {
 
   },*/
   async asyncData() {
     let categoryResult = await api.getRecommendCategories();
 
+
       if(categoryResult.code === 10000){
         //请求分类
         let contentResult = await api.getRecommendContext(categoryResult.data[0].favorites_id);
+        let titleArray=categoryResult.data[0].favorites_title.split('');
          if(contentResult.code  === 10000){
-           console.log(contentResult.data);
            return {
              categories: categoryResult.data,
-             context:contentResult.data
+             context:contentResult.data,
+             currentCategory:titleArray.join('<em>/</em>')
               };
          }
 
@@ -58,20 +76,118 @@ export default {
 </script>
 
 <style>
-  .recommend-context-item {
-    width: 285px;
-    height:370px;
-  }
 
-  .recommend-item-cover img{
-    width: 243px;
-    height:243px;
-  }
   .recommend-menu-active {
     border-bottom:#c9302c 2px solid;
     color:#c9302c !important;
 
   }
+
+  .recommend-category-box ul > li:hover {
+    color:#c9302c;
+  }
+
+  .recommend-context-list-box{
+    box-shadow: 0 5px 10px #d4d4d4;
+  }
+  .recommend-context-title em{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .recommend-context-title span{
+    font-size: 20px;
+    font-weight: 600;
+    color: #4d555d;
+    font-style: normal;
+    margin: 0 3px;
+  }
+  .recommend-context-title{
+     text-align: center;
+     margin-bottom: 30px;
+  }
+
+  .recommend-coupon-info{
+    position: absolute;
+    background: #c9302c;
+    color:#fff;
+    right: 12px;
+    top:20px;
+    padding: 5px 10px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .recommend-item-title a {
+    margin-top: 10px;
+    text-decoration: none;
+    color: #47494e;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .buy-btn{
+    text-decoration: none;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #f56c6c;
+    border: 1px solid #f56c6c;
+    color: #FFF;
+    background-color: #F56C6C;
+    border-color: #F56C6C;
+
+  }
+  .recommend-original{
+    margin-left: 10px;
+    color: #ebb563;
+    font-weight: 600;
+  }
+  .recommend-item-info{
+
+    margin-top: 10px;
+  }
+  .recommend-item-title{
+    margin-top: 10px;
+    text-decoration: none;
+    color: #47494e;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .recommend-context-item {
+    width: 265px;
+    height:370px;
+    box-shadow: 0 5px 10px #d4d4d4;
+    background: #fff;
+    padding: 10px 10px;
+    margin: 10px;
+    position: relative;
+  }
+
+  .recommend-item-cover img{
+    border-radius: 5px;
+    width: 243px;
+    height:243px;
+  }
+
   .recommend-category-box li{
     font-size: 16px;
     margin-left: 20px;
