@@ -164,7 +164,23 @@ html {
 .float-left{
   float: left;
 }
-
+.float-right{
+  float:right;
+}
+.back-top:hover{
+  border: #c9302c 1px solid;
+}
+.back-top{
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  line-height: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 50%;
+  border: #8c8c8c 1px solid;
+  color: #8c8c8c;
+}
 .clear-fix{
   zoom: 1;
   overflow: auto;

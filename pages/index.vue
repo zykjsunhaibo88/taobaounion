@@ -1,13 +1,16 @@
 <template>
   <section class="container">
     <div class="center-box">
-      <div class="recommend-category-box">
+      <div id="recommend-category-box">
         <ul class="recommend-menu clear-fix" >
-          <li :class="index !==0?'float-left':'float-left recommend-menu-active' " v-for="(item,index) in categories "
+          <li :class="item.favorites_id !==currentFavoriteId?'float-left':'float-left recommend-menu-active' " v-for="(item,index) in categories "
               :key="index"  @click="onCategoryClick(item)">{{item.favorites_title}}</li>
+          <li class="float-right back-top el-icon-upload2">
+
+          </li>
         </ul>
       </div>
-      <div class="recommend-context-list-box">
+      <div id="recommend-context-list-box" v-loading="loading">
         <div class="recommend-context-title">
           <span v-html="currentCategory"></span>
         </div>
@@ -35,35 +38,53 @@
 <script>
 import api from '../utils/api';
 export default {
+  data(){
+    return {
+             loading:false
+           }
+  },
   methods: {
     onCategoryClick(item){
-
+      this.currentFavoriteId=item.favorites_id;
       this.currentCategory=(item.favorites_title.split('').join('<em>/</em>'));
       //加载内容
       this.loadContentByCategory(item.favorites_id);
     },
     loadContentByCategory(favoriteId){
+      this.loading=true;
+      this.context.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item.legth=0;
+      this.context.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item=[];
        api.getRecommendContextByProxy(favoriteId).then(result=>{
-         this.context=result.data;
+         if(result.code === 10000){
+           this.loading=false;
+           this.context=result.data;
+         }
+
        })
     }
   },
-  /*data {
-
-  },*/
+  mounted(){
+     let listBox=document.getElementById("recommend-context-list-box");
+     if(listBox){
+       listBox.style.minHeight=document.documentElement.clientHeight+"px";
+     }
+  },
   async asyncData() {
+
     let categoryResult = await api.getRecommendCategories();
 
 
       if(categoryResult.code === 10000){
         //请求分类
-        let contentResult = await api.getRecommendContext(categoryResult.data[0].favorites_id);
+        let currentId=categoryResult.data[0].favorites_id;
+        let contentResult = await api.getRecommendContext(currentId);
         let titleArray=categoryResult.data[0].favorites_title.split('');
          if(contentResult.code  === 10000){
            return {
              categories: categoryResult.data,
              context:contentResult.data,
-             currentCategory:titleArray.join('<em>/</em>')
+             currentCategory:titleArray.join('<em>/</em>'),
+             currentFavoriteId:currentId
               };
          }
 
@@ -76,18 +97,17 @@ export default {
 </script>
 
 <style>
-
   .recommend-menu-active {
     border-bottom:#c9302c 2px solid;
     color:#c9302c !important;
 
   }
-
-  .recommend-category-box ul > li:hover {
+#recommend-category-box ul > li:hover {
     color:#c9302c;
   }
 
-  .recommend-context-list-box{
+  #recommend-context-list-box{
+    margin-top: 80px;
     box-shadow: 0 5px 10px #d4d4d4;
   }
   .recommend-context-title em{
@@ -187,8 +207,7 @@ export default {
     width: 243px;
     height:243px;
   }
-
-  .recommend-category-box li{
+#recommend-category-box li{
     font-size: 16px;
     margin-left: 20px;
     margin-right: 20px;
@@ -196,16 +215,19 @@ export default {
     cursor:pointer;
   }
 
-.recommend-category-box{
+#recommend-category-box{
   height: 60px;
   line-height: 58px;
-  margin-top: 30px;
+  position: fixed;
+  z-index: 1000;
+  width: 1140px;
+  top:90px;
   background: #fff;
   box-shadow: 0 5px 10px #d4d4d4;
   margin-bottom: 30px;
 }
 
-.recommend-category-box ul{
+  #recommend-category-box ul{
   list-style: none;
 }
 </style>
