@@ -168,8 +168,10 @@ html {
   float:right;
 }
 .back-top:hover{
+  color: #c9302c;
   border: #c9302c 1px solid;
 }
+
 .back-top{
   height: 30px;
   width: 30px;

@@ -5,8 +5,8 @@
         <ul class="recommend-menu clear-fix" >
           <li :class="item.favorites_id !==currentFavoriteId?'float-left':'float-left recommend-menu-active' " v-for="(item,index) in categories "
               :key="index"  @click="onCategoryClick(item)">{{item.favorites_title}}</li>
-          <li class="float-right back-top el-icon-upload2">
-
+          <li class="float-right">
+              <a href="#top"><span class="back-top el-icon-upload2"></span></a>
           </li>
         </ul>
       </div>
@@ -17,7 +17,7 @@
         <div class="recommend-context-list clear-fix">
           <div class="recommend-context-item float-left" v-for="(item,index) in context.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item" :key="index">
             <div class="recommend-item-cover">
-              <img :src="item.pict_url">
+              <img :src="item.pict_url+'_240x240xzq90.jpg_.webp'">
             </div>
             <div class="recommend-item-title">
               <a  v-text="item.title" :href="item.coupon_click_url!==null?item.coupon_click_url:item.click_url" target="_blank">
@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     onCategoryClick(item){
+      document.documentElement.scrollTop=0;
       this.currentFavoriteId=item.favorites_id;
       this.currentCategory=(item.favorites_title.split('').join('<em>/</em>'));
       //加载内容
@@ -52,8 +53,10 @@ export default {
     },
     loadContentByCategory(favoriteId){
       this.loading=true;
+      let url=this.context.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item[0];
       this.context.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item.legth=0;
       this.context.tbk_uatm_favorites_item_get_response.results.uatm_tbk_item=[];
+      console.log(url);
        api.getRecommendContextByProxy(favoriteId).then(result=>{
          if(result.code === 10000){
            this.loading=false;
@@ -61,13 +64,30 @@ export default {
          }
 
        })
+    },
+    onScroll(){
+      let menuBox=document.getElementById('recommend-category-box');
+      if(menuBox){
+        let dy=document.documentElement.scrollTop;
+        if(dy<90){
+          menuBox.style.top=(90-dy)+'px';
+        }else{
+
+          menuBox.style.top='0px';
+        }
+       }
     }
   },
+  beforeMount() {
+    this.onScroll();
+  },
   mounted(){
+
      let listBox=document.getElementById("recommend-context-list-box");
      if(listBox){
        listBox.style.minHeight=document.documentElement.clientHeight+"px";
      }
+     window.addEventListener("scroll",this.onScroll);
   },
   async asyncData() {
 
@@ -107,7 +127,7 @@ export default {
   }
 
   #recommend-context-list-box{
-    margin-top: 80px;
+    margin-top: 100px;
     box-shadow: 0 5px 10px #d4d4d4;
   }
   .recommend-context-title em{
