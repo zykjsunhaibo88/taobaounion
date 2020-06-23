@@ -8,14 +8,14 @@
              家庭理财
           </span>
           </div>
-          <div class="header-menu float-left">
-              <ul>
-                <li>网站首页</li>
-                <li>品牌栏目</li>
-                <li>嘉宾阵容</li>
-                <li>今日观点</li>
-                <li>理财商城</li>
-                <li>VIP直播</li>
+          <div class="float-left sidebar-container">
+               <ul class="menus">
+                <li class="menu-item"><a href="/"><i class="iconfont">&#xe633;</i>首页</a></li>
+                <li class="menu-item"><a href="/live"><i class="iconfont">&#xe633;</i>讲堂直播课</a></li>
+                <li class="menu-item"><a href="/list"><i class="iconfont">&#xe633;</i>精品推荐</a></li>
+                <li class="menu-item"><a href=""><i class="iconfont">&#xe633;</i>品牌栏目</a></li>
+                <li class="menu-item"><a href="/teacher"><i class="iconfont">&#xe633;</i>大咖讲师</a></li>
+                <li class="menu-item"><a href="/discovery"><i class="iconfont">&#xe633;</i>我大课程</a></li>
               </ul>
           </div>
           <div class="header-search-box float-left">
@@ -28,36 +28,25 @@
     </div>
     <nuxt/>
     <!--底部-->
-    <div id="footer">
-      <div class="center-box">
-        <div class="footer_link">
-          <ul class=" clear-fix">
-            <li>关于我们</li>
-            <li>关于我们</li>
-            <li>合作伙伴</li>
-            <li>客服电话</li>
-          </ul>
-        </div>
-        <div class="footer_second">
-          <ul class=" clear-fix">
-            <li>公司介绍</li>
-            <li>媒体矩阵</li>
-            <li>合作伙伴</li>
-            <li>客服热线：400-655-5088</li>
-          </ul>
-        </div>
-        <div class="copyright"><span>首华财经 版本所有</span></div>
-        <div class="size-info">
-          <p>&COPY;家庭理财 Copyright  2014-2020
-          <span>&nbsp;|&nbsp;</span>
-          <a href="http://www.beian.miit.gov.cn/" target="_blank" style="color:white">辽ICP备16013640号</a>
-          <span>&nbsp;|&nbsp;</span>
-          <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21010202000737" target="_blank" style="color:white">辽公网安备 21010202000737号</a>
-          </p>
-        </div>
+    <div class="i_footer" id="footer">
+      <div class="footer_content clearfix">
+           <div class="footer_msg"><ul><li class="m_header">关于我们</li> <li class="m_row"></li> <li><a href="http://edu.tvlicai.com/terrace/1240165743842881538">公司介绍</a></li></ul></div><div class="footer_msg"><ul><li class="m_header">关注我们</li> <li class="m_row"></li> <li><a href="http://edu.tvlicai.com/terrace/1240167935811317761">媒体矩阵</a></li></ul></div><div class="footer_msg"><ul><li class="m_header">合作伙伴</li> <li class="m_row"></li> <li><a href="http://edu.tvlicai.com/terrace/1240170125951037442">合作伙伴</a></li></ul>
+           </div>
+           <div class="footer_msg"><ul><li class="m_header">联系客服</li> <li class="m_row"></li> <li>
+           客服热线：400-655-5088 </li> <!----> <!----> <!----> <!----> </ul>
+           </div>
+       <div class="m_right">
+          <div class="footer_msg">
+            <ul><li class="m_header">官方微信</li> <li><img src="https://shcjtest.obs.cn-north-4.myhuaweicloud.com/lingke/system/微信.jpg" alt=""></li></ul>
+          </div> <!---->
+       </div>
+      </div> <!---->
+      <div class="copyright"><span>首华财经 版本所有</span></div>
+      <div class="icp_num">
+        家庭理财 Copyright  2014-2020
+        <span>&nbsp;|&nbsp;</span> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=16013640" target="_blank" class="c_ccc">辽ICP备16013640号</a> <span>&nbsp;|&nbsp;</span>
+        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21010202000737" target="_blank" class="c_ccc"><img  alt="" class="prn_icon">&nbsp;辽公网安备 21010202000737号</a>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -79,74 +68,157 @@ html {
   margin: 0;
   padding: 0;
 }
+.menu-item a {
+  line-height: 75px;
+  display: block;
+  padding-left: 27px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #333;
+}
+.iconfont {
+  font-family: iconfont!important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.menus {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+.sidebar-container {
+  width: 180px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  overflow: auto;
+}
+
 #header{
   box-shadow: 0 5px 10px #d4d4d4;
   background: #fff;
   height: 70px;
 }
+
+.footer_content {
+  width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #666;
+}
+
 #footer {
-  background-color: #c9302c;
+  margin-top: 600px;
 }
 
-.header-menu {
-  margin-left: 30px;
+.i_footer {
+  background: #333;
+  padding-top: 23px;
 }
-.copyright{
-  text-align: center;
-  color: #fff;
-  line-height: 30px;
+.footer_content {
+  width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #666;
 }
-.size-info{
-  text-align: center;
-  color: #fff;
-  line-height: 30px;
-  padding-bottom: 40px;
-}
-.footer_link li{
+
+.footer_msg {
   float: left;
+  width: 160px;
+}
+.m_header {
   color: #fff;
-  line-height: 30px;
-  padding-left: 10px;
-  padding-right:10px ;
-  margin-left: 10px;
-  margin-top: 0px;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
-
-.footer_link ul{
-  list-style: none;
-  text-align: center;
-}
-
-.footer_link {
-  padding-top: 40px;
-}
-
-.footer_second li{
-  float: left;
+.m_row {
+  width: 78px;
+  height: 1px;
+  background: #d18f0f;
+  font-size: 14px;
+  margin-bottom: 15px;
   color: #fff;
+}
+.m_right {
+  float: right;
+}
+.copyright {
+  background: #666;
   line-height: 30px;
-  padding-left: 10px;
-  padding-right:10px ;
-  margin-left: 10px;
+  text-align: center;
+  color: #ccc;
+  margin-top: 100px;
+  font-size: 14px;
+}
+.icp_num {
+  padding: 15px 0;
+  line-height: 30px;
+  text-align: center;
+  color: #ccc;
+  font-size: 14px;
 }
 
-.footer_second ul{
-  list-style: none;
+.icp_num  a{
+  margin: 0;
+  color: #fff;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  text-decoration: none;
+  background: transparent;
+}
+
+
+.m_header {
+  color: #fff;
+
+  margin-bottom: 10px;
+}
+.footer_msg img {
+  width: 96px;
+  height: 96px;
+}
+
+.footer_msg li {
+  list-style-type:none;
+  font-size: 14px;
+
+}
+.footer_msg a {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+
+.copyright {
+  background: #666;
+  line-height: 30px;
   text-align: center;
+  color: #ccc;
 }
 
 .header-menu li:hover{
   background: #fe9900;
 }
-.menu-active{
-  background: #fe9900;
-}
+
 
 .header-search-box{
   margin-left: 20px;
 }
 
-.header-search-box .el-input{
+.header-search-box{
   width: 300px;
 }
 .header-search-btn{
@@ -154,7 +226,7 @@ html {
 }
 
 
-.header-search-btn .el-button--danger{
+.header-search-btn {
    width: 100px;
 }
 .header-search-box,.header-search-btn{
@@ -164,25 +236,7 @@ html {
 .float-left{
   float: left;
 }
-.float-right{
-  float:right;
-}
-.back-top:hover{
-  color: #c9302c;
-  border: #c9302c 1px solid;
-}
 
-.back-top{
-  height: 30px;
-  width: 30px;
-  text-align: center;
-  line-height: 30px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border-radius: 50%;
-  border: #8c8c8c 1px solid;
-  color: #8c8c8c;
-}
 .clear-fix{
   zoom: 1;
   overflow: auto;
