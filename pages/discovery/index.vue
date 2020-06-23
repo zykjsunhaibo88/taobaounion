@@ -2,8 +2,8 @@
   <section class="container">
   <div class="home-center-part">
     <el-carousel :interval="5000" arrow="always">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3>{{ item }}</h3>
+      <el-carousel-item v-for="(item,index) in advInfoList" :key="index">
+        <img :src="item.advImg">
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -13,8 +13,16 @@
   import api from "../../utils/api";
   export default {
     async asyncData() {
-      let advListResult = await api.advList();
-      console.log(advListResult);
+      let param = {
+        moudleId: 1
+      }
+      let advListResult = await api.advList(param);
+      if(advListResult.code === 200){
+        return {
+          advInfoList:advListResult.data.advInfoList
+         };
+      }
+
     }
   }
 </script>
@@ -34,12 +42,22 @@
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
   }
+
+
+  .el-carousel__container {
+    position: relative;
+    height: 600px;
+  }
   .home-center-part {
     margin-left: 160px;
     margin-bottom: 30px;
     width: 91.5%;
     margin-right: 10px;
     float: left;
-    height: 360px;
+    height: 600px;
+  }
+
+  #footer {
+    margin-top: 700px;
   }
 </style>

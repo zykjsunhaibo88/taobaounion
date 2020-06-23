@@ -47,5 +47,20 @@ export default {
         reject(error)
       })
     })
+  },
+  // put请求
+  requestHeadersPost(url, params = {}) {
+    return new Promise((resolve, reject) => {
+        axios.post(url, params, {
+          headers: {
+            orgNo: 'lingke'
+          }
+        }).then(res => {
+          resolve(res.data)
+          console.log('请求成功')
+        }).catch(error => {
+          console.log('请求失败')
+        })
+    })
   }
 }

@@ -118,7 +118,6 @@ html {
 }
 
 #footer {
-  margin-top: 600px;
 }
 
 .i_footer {
