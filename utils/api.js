@@ -3,7 +3,10 @@ import request from './http'
 export const baseUrl="https://shop.sunofbeach.net/union/shop/";
 export const baseUrlUp="http://gateway.tvlicai.com/";
 
+const SUCCESS_CODE=10000;
+
 export default {
+  SUCCESS_CODE,
   getCategories(){
     return request.requestGet(baseUrl+"discovery/categories")
   },

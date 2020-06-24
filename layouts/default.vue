@@ -235,7 +235,9 @@ html {
 .float-left{
   float: left;
 }
-
+.float-center{
+  float: center;
+}
 .clear-fix{
   zoom: 1;
   overflow: auto;
