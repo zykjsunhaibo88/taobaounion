@@ -7,7 +7,28 @@
          </ul>
       </div>
       <div class="discovery-center-part float-left">
-        这个是中间
+        <div class="discovery-content-item clear-fix" v-for="(item, index) in contentList" :key="index">
+          <div class="item-left-cover float-left">
+            <el-image
+              style="width: 180px; height: 180px"
+              :src="item.pict_url"></el-image>
+          </div>
+          <div class="item-right-info float-left">
+            <div class="item-title">
+              <span v-text="item.title"></span>
+            </div>
+            <div class="prise-info">
+              <span class="original-prise" v-text="'原价：'+item.zk_final_price+'元'"></span>
+              <span class="off-prise">券后价：<span v-text="to2Bit(item.zk_final_price-item.coupon_amount)"></span></span>
+            </div>
+            <div class="sell-info">
+              <span v-text="item.volume"></span>
+              <span>·</span>
+              <span>人购买</span>
+            </div>
+            <el-button class="discovery-buy-btn" type="danger" size="small">领券购买</el-button>
+          </div>
+        </div>
       </div>
       <div class="discovery-right-part  float-left">
         这个是右边
@@ -18,6 +39,11 @@
 <script>
   import api from '../../utils/api';
   export default {
+    methods:{
+      to2Bit(num){
+       return num.toFixed(2);
+      }
+    },
     async asyncData() {
       let categoriesResult = await api.getCategories();
       if(categoriesResult.code === api.SUCCESS_CODE) {
@@ -27,7 +53,7 @@
         let  currentCategoryId=recommendItem.id;
         let  contentResultData = await api.getCategoriesContext(currentCategoryId,1);
         if(contentResultData.code===api.SUCCESS_CODE){
-          //console.log(contentResultData.data)
+
           return{
             categoriesList,
             currentCategoryId,
@@ -40,6 +66,32 @@
   }
 </script>
 <style>
+  .original-prise{
+
+  }
+  .off-prise{
+    color: orangered;
+  }
+  .item-right-info{
+    margin-left:10px ;
+  }
+  .item-title {
+     font-size: 22px;
+     color: #47494e;
+     font-weight: 600;
+     max-width: 500px;
+  }
+
+  .item-left-cover img{
+    border-radius: 5px;
+  }
+  .discovery-content-item{
+     background:#fff;
+     box-shadow: 0 5px 10px #d4d4d4;
+     margin-bottom: 10px;
+     padding: 10px;
+     position: relative;
+  }
   .discovery-category-active{
      background: #ff4500;
      color: #fff;
@@ -72,8 +124,6 @@
     width: 710px;
     margin-left: 10px;
     margin-right: 10px;
-    height: 1000px;
-    background: antiquewhite;
 }
 .discovery-right-part{
      width: 280px;
@@ -81,4 +131,22 @@
      height: 500px;
      background: #89ffaa;
 }
+
+  .prise-info{
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .sell-info{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #47494e;
+    font-size: 16px;
+  }
+  .discovery-buy-btn {
+    position: absolute;
+    bottom:20px;
+    right:20px;
+  }
 </style>
