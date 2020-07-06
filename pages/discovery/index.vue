@@ -2,16 +2,21 @@
   <div class="center-box clear-fix">
     <div class="discovery-context-box">
       <div class="discovery-left-part float-left">
-         <ul>
-           <li :class="currentCategoryId===item.id?'discovery-category-active':'discovery-category'" v-for="(item,index) in categoriesList " :key="index"><span  v-text="item.title"></span></li>
-         </ul>
+        <div id="discover-left-menu-box">
+          <ul>
+            <li :class="currentCategoryId===item.id?'discovery-category-active':'discovery-category'" v-for="(item,index) in categoriesList " :key="index">
+              <span  v-text="item.title"></span>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="discovery-center-part float-left">
         <div class="discovery-content-item clear-fix" v-for="(item, index) in contentList" :key="index">
           <div class="item-left-cover float-left">
             <el-image
               style="width: 180px; height: 180px"
-              :src="item.pict_url"></el-image>
+              :src="item.pict_url"
+              fit="cover"></el-image>
           </div>
           <div class="item-right-info float-left">
 
@@ -35,15 +40,13 @@
         </div>
       </div>
       <div class="discovery-right-part  float-left">
-       <div class="discovery-right-loop">
+       <div id="discovery-right-loop">
          <div class="block">
-           <span class="demonstration">默认 Hover 指示器触发</span>
            <el-carousel
-             :autoplay="false"
-             height="150px">
+             height="275px">
              <el-carousel-item v-for="(item,index) in loopData" :key="index">
                <el-image
-                 style="width: 275px; height: 150px"
+                 style="width: 275px; height: 275px"
                  :src="item.pict_url"
                   fit="cover"></el-image>
              </el-carousel-item>
@@ -60,6 +63,19 @@
     methods:{
       to2Bit(num){
        return num.toFixed(2);
+      },
+      onScroll(){
+       let leftMenuBox = document.getElementById("discover-left-menu-box");
+       if(leftMenuBox){
+         //判断当前滑动距离
+         console.log(leftMenuBox.offsetTop);
+         let dy=document.documentElement.scrollTop;
+         if(dy>=100){
+           leftMenuBox.style.top='100px';
+         }else{
+           leftMenuBox.style.top=(100-dy)+'px';
+         }
+       }
       }
     },
     async asyncData() {
@@ -82,10 +98,18 @@
         }
       }
 
+    },
+    mounted() {
+      this.onScroll();
+      window.addEventListener("scroll",this.onScroll);
     }
   }
 </script>
 <style>
+  #discover-left-menu-box {
+    position: fixed;
+    box-shadow: 0 5px 10px #d4d4d4;
+  }
   .original-prise{
    text-decoration: line-through;
     color:#999999;
@@ -122,16 +146,17 @@
      background: #ff4500;
      color: #fff;
   }
-  .discovery-left-part li:hover{
+  #discover-left-menu-box li:hover{
     background: #ff4500;
     color: #fff;
   }
-.discovery-left-part li{
+  #discover-left-menu-box li{
   width: 105px;
   height: 40px;
   line-height: 40px;
   cursor: pointer;
   text-align: center;
+  list-style: none;
 }
   /*1140 分三份 第一份左边 120，第二部分中间，第三部分右边*/
 .discovery-context-box{
@@ -185,8 +210,14 @@
     background-color: orangered;
     border-color: orangered;
   }
-  .el-carousel__button{
-    width: 5px;
-    height: 5px;
+   .el-carousel__button{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  #discovery-right-loop {
+    position: fixed;
+    width: 275px;
   }
 </style>
