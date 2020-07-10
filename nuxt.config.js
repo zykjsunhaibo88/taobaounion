@@ -20,6 +20,10 @@ module.exports = {
     {
       src: '~plugins/elementui',
       ssr: true
+    },
+    {
+      src: '~plugins/tcplayer',
+      ssr: false
     }
   ],
   modules: [
